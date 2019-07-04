@@ -1,0 +1,48 @@
+{
+  "name": "eslint-gen-overrides",
+  "version": "0.0.1",
+  "description": "Generate overrides for eslint violations.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest",
+    "posttest": "eslint . && npm run tsc",
+    "prebuild": "rimraf lib",
+    "test:watch": "jest --watchAll",
+    "tsc": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build"
+  },
+  "author": "Sharmila Jesupaul",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sharmilajesupaul/eslint-gen-overrides.git"
+  },
+  "keywords": [
+    "eslint",
+    "linter",
+    "js"
+  ],
+  "bugs": {
+    "url": "https://github.com/sharmilajesupaul/eslint-gen-overrides/issues"
+  },
+  "homepage": "https://github.com/sharmilajesupaul/eslint-gen-overrides#readme",
+  "devDependencies": {
+    "@types/eslint": "^4.16.6",
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.0.12",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "jest": "^24.8.0",
+    "prettier": "^1.18.2",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {
+    "acorn": "^6.2.0",
+    "eslint": "^6.0.1"
+  }
+}
