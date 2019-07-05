@@ -75,6 +75,7 @@ async function run({ format, input }: CLIOptions) {
   // @ts-ignore
   const uniqueFiles: string[] = [].concat(...files).filter(onlyUnique);
   const report = lintFiles(uniqueFiles);
+  console.log(report);
   const { results } = report;
   interface RuleViolations {
     [key: string]: string[];
