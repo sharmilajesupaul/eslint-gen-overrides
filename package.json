@@ -5,9 +5,11 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
-    "posttest": "eslint . && npm run tsc",
+    "posttest": "npm run lint && npm run tsc",
     "prebuild": "rimraf lib",
     "test:watch": "jest --watchAll",
+    "lint": "eslint --ext .js,.ts .",
+    "lint:fix": "eslint --fix --ext .js,.ts .",
     "tsc": "tsc",
     "build": "tsc -p tsconfig.build.json",
     "prepare": "npm run build"
@@ -30,6 +32,7 @@
   "devDependencies": {
     "@types/eslint": "^4.16.6",
     "@types/jest": "^24.0.15",
+    "@types/minimist": "^1.2.0",
     "@types/node": "^12.0.12",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
@@ -43,6 +46,7 @@
   },
   "dependencies": {
     "acorn": "^6.2.0",
-    "eslint": "^6.0.1"
+    "eslint": "^6.0.1",
+    "minimist": "^1.2.0"
   }
 }
