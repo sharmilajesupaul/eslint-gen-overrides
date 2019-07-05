@@ -3,15 +3,18 @@
   "version": "0.0.1",
   "description": "Generate overrides for eslint violations.",
   "main": "lib/index.js",
+  "bin": {
+    "eslint-gen-overrides": "./bin.js"
+  },
   "scripts": {
     "test": "jest",
     "posttest": "npm run lint && npm run tsc",
+    "build": "tsc -p tsconfig.build.json",
     "prebuild": "rimraf lib",
     "test:watch": "jest --watchAll",
     "lint": "eslint --ext .js,.ts .",
     "lint:fix": "eslint --fix --ext .js,.ts .",
     "tsc": "tsc",
-    "build": "tsc -p tsconfig.build.json",
     "prepare": "npm run build"
   },
   "author": "Sharmila Jesupaul",
