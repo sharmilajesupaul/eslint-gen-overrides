@@ -5,7 +5,7 @@ const allExtensions = jsExtensions.concat(tsExtensions);
 module.exports = {
   env: {
     es6: true,
-    node: true,
+    node: true
   },
   root: true,
   extends: ['prettier'],
@@ -13,36 +13,40 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   rules: {
-    "prettier/prettier": ["error", {
-      singleQuote: true,
-      trailingComma: "all",
-      printWidth: 100,
-      arrowParens: "always",
-      useTabs: false,
-      bracketSpacing: true,
-      semi: true
-    }],
+    'prettier/prettier': [
+      'error',
+      {
+        singleQuote: true,
+        trailingComma: 'all',
+        printWidth: 100,
+        arrowParens: 'always',
+        useTabs: false,
+        bracketSpacing: true,
+        semi: true
+      }
+    ],
+    'comma-dangle': ['error', 'always-multiline']
   },
   settings: {
     'import/extensions': allExtensions,
     'import/parsers': {
-      '@typescript-eslint/parser': tsExtensions,
+      '@typescript-eslint/parser': tsExtensions
     },
     'import/resolver': {
       node: {
-        extensions: allExtensions,
-      },
-    },
+        extensions: allExtensions
+      }
+    }
   },
   overrides: [
     {
       files: ['__tests__/*.ts'],
       env: {
-        jest: true,
-      },
-    },
-  ],
+        jest: true
+      }
+    }
+  ]
 };

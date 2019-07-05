@@ -31,11 +31,14 @@
   "homepage": "https://github.com/sharmilajesupaul/eslint-gen-overrides#readme",
   "devDependencies": {
     "@types/eslint": "^4.16.6",
+    "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.15",
+    "@types/meow": "^5.0.0",
     "@types/minimist": "^1.2.0",
     "@types/node": "^12.0.12",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
+    "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.8.0",
@@ -46,7 +49,8 @@
   },
   "dependencies": {
     "acorn": "^6.2.0",
-    "eslint": "^6.0.1",
+    "glob": "^7.1.4",
+    "meow": "^5.0.0",
     "minimist": "^1.2.0"
   }
 }
