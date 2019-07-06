@@ -72,6 +72,29 @@ function onlyUnique(value: never, index: number, self: []) {
   return self.indexOf(value) === index;
 }
 
+// This is a map of [rule name]: [...files]
+interface RuleViolations {
+  [key: string]: string[];
+}
+interface ESLintOverride {
+  rules: {
+    [key: string]: 'error' | 'warn' | 'off' | 0 | 1 | 2;
+  };
+  files: string[];
+}
+
+type EslintOverrides = ESLintOverride[];
+
+function generateOverrides(filesPerRule: RuleViolations): EslintOverrides {
+  return Object.entries(filesPerRule).map(([ruleId, files]) => {
+    return {
+      // add config options to switch rules to 'warn' instead of 'off'
+      rules: { [ruleId]: 'off' },
+      files: files,
+    };
+  });
+}
+
 async function run({ format, input, extensions }: CLIOptions) {
   const validFormats = ['json', 'js', 'yml'];
   if (validFormats.indexOf(format) === -1) {
@@ -84,12 +107,7 @@ async function run({ format, input, extensions }: CLIOptions) {
   // NOTE: typescript does not support iterables on sets
   // @ts-ignore
   const uniqueFiles: string[] = [].concat(...files).filter(onlyUnique);
-  const report = lintFiles(uniqueFiles, extensions);
-  console.log(report);
-  const { results } = report;
-  interface RuleViolations {
-    [key: string]: string[];
-  }
+  const { results } = lintFiles(uniqueFiles, extensions);
 
   const filesPerRule: RuleViolations = {};
 
@@ -110,7 +128,7 @@ async function run({ format, input, extensions }: CLIOptions) {
       });
     });
 
-  console.log(filesPerRule);
+  console.log(JSON.stringify(generateOverrides(filesPerRule)));
 }
 
 run({ format, input, extensions });
