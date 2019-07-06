@@ -3,7 +3,7 @@ import meow from 'meow';
 import glob from 'glob';
 
 const {
-  flags: { format, extensions },
+  flags: { format, extensions, fix },
   input,
 } = meow(
   `
@@ -13,9 +13,10 @@ const {
     Options
       --format, -f  specify an output format [json, yml, or js] - default: json
       --extensions, -ext  specify file extensions to run the linter against. default: .js
+      --fix, fixes all auto-fixable rules before generating overrides. default: false
 
     Examples
-      $  eslint-gen-overrides 'my/project/**/*.js' --format yml --extensions .ts,.js,.tsx,.jsx
+      $  eslint-gen-overrides 'my/project/**/*.js' --format yml --extensions .ts,.js,.tsx,.jsx --fix
 `,
   {
     flags: {
@@ -29,6 +30,10 @@ const {
         default: '.js',
         alias: 'ext',
       },
+      fix: {
+        type: 'boolean',
+        default: false,
+      },
     },
   },
 );
@@ -37,6 +42,7 @@ interface CLIOptions {
   format: 'js' | 'json' | 'yml';
   input: string[];
   extensions: string;
+  fix: boolean;
 }
 
 function globPromise(globString: string): Promise<string[]> {
@@ -60,8 +66,9 @@ async function getFilesToLint(globs: string[]) {
   );
 }
 
-function lintFiles(files: string[], extensions: string) {
+function lintFiles(files: string[], extensions: string, fix: boolean) {
   const cli = new CLIEngine({
+    fix,
     useEslintrc: true,
     extensions: extensions.split(','),
   });
@@ -95,7 +102,7 @@ function generateOverrides(filesPerRule: RuleViolations): EslintOverrides {
   });
 }
 
-async function run({ format, input, extensions }: CLIOptions) {
+async function run({ format, input, extensions, fix }: CLIOptions) {
   const validFormats = ['json', 'js', 'yml'];
   if (validFormats.indexOf(format) === -1) {
     throw new TypeError(
@@ -104,10 +111,9 @@ async function run({ format, input, extensions }: CLIOptions) {
   }
 
   const files = await getFilesToLint(input);
-  // NOTE: typescript does not support iterables on sets
   // @ts-ignore
   const uniqueFiles: string[] = [].concat(...files).filter(onlyUnique);
-  const { results } = lintFiles(uniqueFiles, extensions);
+  const { results } = lintFiles(uniqueFiles, extensions, fix);
 
   const filesPerRule: RuleViolations = {};
 
@@ -131,4 +137,4 @@ async function run({ format, input, extensions }: CLIOptions) {
   console.log(JSON.stringify(generateOverrides(filesPerRule)));
 }
 
-run({ format, input, extensions });
+run({ format, input, extensions, fix });
