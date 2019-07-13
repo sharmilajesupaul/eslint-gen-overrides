@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/sharmilajesupaul/eslint-gen-overrides#readme",
   "devDependencies": {
+    "@types/dedent": "^0.7.0",
     "@types/eslint": "^4.16.6",
     "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.15",
@@ -52,6 +53,7 @@
   },
   "dependencies": {
     "acorn": "^6.2.0",
+    "dedent": "^0.7.0",
     "glob": "^7.1.4",
     "meow": "^5.0.0"
   }
