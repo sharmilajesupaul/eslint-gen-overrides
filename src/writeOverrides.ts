@@ -1,5 +1,5 @@
 import { ESLintOverrides } from '../types/EslintOverride';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import os from 'os';
 import path from 'path';
 import dedent from 'dedent';
@@ -32,7 +32,13 @@ export default function writeOverrides(
   }
 
   if (updateConfigFile) {
-    const configPath = path.join(process.cwd(), `.eslintrc.${format}`);
+    const filenameWithFormat = `.eslintrc.${format}`;
+    const filenameWithoutFormat = `.eslintrc`;
+    let configPath = path.join(process.cwd(), filenameWithFormat);
+    if (!existsSync(configPath)) {
+      configPath = path.join(process.cwd(), filenameWithoutFormat);
+    }
+
     const { overrides }: { overrides?: ESLintOverrides } = JSON.parse(
       String(readFileSync(configPath)),
     );
